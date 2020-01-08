@@ -5,6 +5,7 @@ import junit.framework.Assert;
 import org.apache.shiro.authz.Permission;
 
 /**
+ * 权限集合
  *  规则
  *    +资源字符串+权限位+实例ID
  *
@@ -31,6 +32,10 @@ public class BitPermission implements Permission {
     private int permissionBit;
     private String instanceId;
 
+    /**
+     * 此处构造方法，供implies使用
+     * @param permissionString
+     */
     public BitPermission(String permissionString) {
         String[] array = permissionString.split("\\+");
 
@@ -56,6 +61,7 @@ public class BitPermission implements Permission {
 
     }
 
+    //GET 这是在做什么？对比要验证的权限，是否具备应有的权限
     @Override
     public boolean implies(Permission p) {
         if(!(p instanceof BitPermission)) {

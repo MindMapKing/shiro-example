@@ -1,30 +1,34 @@
 package com.github.zhangkaitao.shiro.chapter2;
 
-import junit.framework.Assert;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
-import org.apache.shiro.authz.ModularRealmAuthorizer;
 import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.mgt.SessionsSecurityManager;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.Destroyable;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
 import org.junit.After;
 import org.junit.Test;
 
+import junit.framework.Assert;
+
 
 /**
+ * 针对多种校验可以设置对应的校验规则
+ * 1、只要有一个成功就通过，返回这个成功的记录信息
+ * 2、只要有一个成功就通过，返回所有认证成功的信息 ：AtLeastOneSuccessfulStrategy
+ * 3、只有所有校成功才通过，返回所有认证成功的信息 ：AllSuccessfulStrategy
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-25
  * <p>Version: 1.0
  */
 public class AuthenticatorTest {
 
+	/**
+	 * 测试所有得成功
+	 * 1、配置中配置了两种校验
+	 */
     @Test
     public void testAllSuccessfulStrategyWithSuccess() {
         login("classpath:shiro-authenticator-all-success.ini");
@@ -33,13 +37,24 @@ public class AuthenticatorTest {
         //得到一个身份集合，其包含了Realm验证成功的身份信息
         PrincipalCollection principalCollection = subject.getPrincipals();
         Assert.assertEquals(2, principalCollection.asList().size());
+        System.out.println(subject.isAuthenticated());
     }
 
+    /**
+     * 测试所有得通过
+     * 1、配置中配置了两种校验
+     * 2、设置了期待的异常信息
+     */
     @Test(expected = UnknownAccountException.class)
     public void testAllSuccessfulStrategyWithFail() {
         login("classpath:shiro-authenticator-all-fail.ini");
     }
 
+    /**
+     * 测试至少一个得过，返回一个
+     * 1、配置了3个校验条件
+     * 
+     */
     @Test
     public void testAtLeastOneSuccessfulStrategyWithSuccess() {
         login("classpath:shiro-authenticator-atLeastOne-success.ini");
@@ -50,6 +65,9 @@ public class AuthenticatorTest {
         Assert.assertEquals(2, principalCollection.asList().size());
     }
 
+    /**
+     * 测试至少一个得过，返回所有
+     */
     @Test
     public void testFirstOneSuccessfulStrategyWithSuccess() {
         login("classpath:shiro-authenticator-first-success.ini");
@@ -60,6 +78,9 @@ public class AuthenticatorTest {
         Assert.assertEquals(1, principalCollection.asList().size());
     }
 
+    /**
+     *	 自定义的strategy供ModularRealmAuthenticator调用
+     */
     @Test
     public void testAtLeastTwoStrategyWithSuccess() {
         login("classpath:shiro-authenticator-atLeastTwo-success.ini");

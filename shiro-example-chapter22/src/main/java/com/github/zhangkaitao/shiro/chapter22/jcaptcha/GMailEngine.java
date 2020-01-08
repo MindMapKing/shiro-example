@@ -3,12 +3,14 @@ package com.github.zhangkaitao.shiro.chapter22.jcaptcha;
 import com.octo.captcha.component.image.backgroundgenerator.BackgroundGenerator;
 import com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator;
 import com.octo.captcha.component.image.color.RandomListColorGenerator;
+import com.octo.captcha.component.image.color.RandomRangeColorGenerator;
 import com.octo.captcha.component.image.deformation.ImageDeformation;
 import com.octo.captcha.component.image.deformation.ImageDeformationByFilters;
 import com.octo.captcha.component.image.fontgenerator.FontGenerator;
 import com.octo.captcha.component.image.fontgenerator.RandomFontGenerator;
 import com.octo.captcha.component.image.textpaster.DecoratedRandomTextPaster;
 import com.octo.captcha.component.image.textpaster.TextPaster;
+import com.octo.captcha.component.image.textpaster.textdecorator.LineTextDecorator;
 import com.octo.captcha.component.image.textpaster.textdecorator.TextDecorator;
 import com.octo.captcha.component.image.wordtoimage.DeformedComposedWordToImage;
 import com.octo.captcha.component.image.wordtoimage.WordToImage;
@@ -40,11 +42,15 @@ public class GMailEngine extends ListImageCaptchaEngine {
         WordGenerator dictionnaryWords = new ComposeDictionaryWordGenerator(
                 new FileDictionary("toddlist"));
 
+        RandomRangeColorGenerator cgen = new RandomRangeColorGenerator(  
+        		new int[] { 0, 150 }, new int[] { 0, 150 },  
+        		new int[] { 0, 150 });
+        
         // word2image components
         TextPaster randomPaster = new DecoratedRandomTextPaster(minWordLength,
                 maxWordLength, new RandomListColorGenerator(new Color[]{
                 new Color(23, 170, 27), new Color(220, 34, 11),
-                new Color(23, 67, 172)}), new TextDecorator[]{});
+                new Color(23, 67, 172)}), new TextDecorator[]{new LineTextDecorator(1,cgen)});
         BackgroundGenerator background = new UniColorBackgroundGenerator(
                 imageWidth, imageHeight, Color.white);
         FontGenerator font = new RandomFontGenerator(fontSize, fontSize,

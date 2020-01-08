@@ -1,21 +1,16 @@
 package com.github.zhangkaitao.shiro.chapter2;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import junit.framework.Assert;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.Authenticator;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.config.IniFactorySupport;
 import org.apache.shiro.config.IniSecurityManagerFactory;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
 import org.junit.After;
 import org.junit.Test;
 
-import java.sql.Connection;
+import junit.framework.Assert;
 
 
 /**
@@ -25,6 +20,13 @@ import java.sql.Connection;
  */
 public class LoginLogoutTest {
 
+	/**
+	 * 1、先建工程(Factory)，再获取安全管理器
+	 * 2、通过安全管理器工具获取交互对象(SecurityManager/Subject)
+	 * 3、构造token(UsernamePasswordToken)
+	 * 4、使用交互对象进行登录校验
+	 * 5、交互对象注销
+	 */
     @Test
     public void testHelloworld() {
         //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager
@@ -53,6 +55,9 @@ public class LoginLogoutTest {
     }
 
 
+    /**
+     * 1、Realm ：代表用户数据的对象（权限、角色、用户信息）
+     */
     @Test
     public void testCustomRealm() {
         //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager
@@ -81,6 +86,10 @@ public class LoginLogoutTest {
         subject.logout();
     }
 
+    /**
+     * 测试多个Realm情况
+     * GET 不设置多情况校验策略时，默认的策略是什么？ 至少一个成功，返回所有验证成功的：AtLeastOneSuccessfulStrategy
+     */
     @Test
     public void testCustomMultiRealm() {
         //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager
@@ -109,7 +118,10 @@ public class LoginLogoutTest {
         subject.logout();
     }
 
-
+    /**
+     * 	配置信息存放数据库
+     * 1、JdbcRealm自定义了对数据的操作
+     */
     @Test
     public void testJDBCRealm() {
         //1、获取SecurityManager工厂，此处使用Ini配置文件初始化SecurityManager

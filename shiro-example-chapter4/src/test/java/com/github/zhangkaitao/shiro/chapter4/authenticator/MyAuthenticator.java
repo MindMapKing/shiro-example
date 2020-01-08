@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 配置中的数据也是通过setter放至到authenticator中的
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-27
  * <p>Version: 1.0

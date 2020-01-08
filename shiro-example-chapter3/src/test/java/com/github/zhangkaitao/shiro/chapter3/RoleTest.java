@@ -7,12 +7,17 @@ import org.junit.Test;
 import java.util.Arrays;
 
 /**
+ * 基于角色的权限控制
+ * QT Shiro提供的授权的方式只有代码、注解、前端，也是一种写死角色的方法，如何做到角色和权限更动态化？
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-26
  * <p>Version: 1.0
  */
 public class RoleTest extends BaseTest {
 
+	/**
+	 * 校验是否具备某个角色
+	 */
     @Test
     public void testHasRole() {
         login("classpath:shiro-role.ini", "zhang", "123");

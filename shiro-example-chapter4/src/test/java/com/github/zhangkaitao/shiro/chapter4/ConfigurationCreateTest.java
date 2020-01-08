@@ -19,6 +19,7 @@ import org.junit.Test;
 import java.util.Arrays;
 
 /**
+ * 1、WildcardPermissionResolver ： 权限字段的解析类
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-27
  * <p>Version: 1.0

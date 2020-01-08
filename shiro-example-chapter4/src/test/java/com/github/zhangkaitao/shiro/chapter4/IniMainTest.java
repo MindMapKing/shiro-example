@@ -21,6 +21,7 @@ import sun.misc.BASE64Encoder;
 import java.util.Arrays;
 
 /**
+ * ModularRealmAuthenticator 授权 VS ModularRealmAuthorizer 验证
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-27
  * <p>Version: 1.0

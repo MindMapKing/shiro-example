@@ -6,6 +6,7 @@ import org.apache.shiro.authz.permission.WildcardPermission;
 import org.apache.shiro.realm.text.IniRealm;
 
 /**
+ *  	权限字符串解析
  * <p>User: Zhang Kaitao
  * <p>Date: 14-1-26
  * <p>Version: 1.0

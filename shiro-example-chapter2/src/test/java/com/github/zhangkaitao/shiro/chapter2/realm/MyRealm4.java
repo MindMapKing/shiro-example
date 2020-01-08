@@ -14,12 +14,18 @@ public class MyRealm4 implements Realm {
     public String getName() {
         return "myrealm4";
     }
-
+    
+    /**
+     * 判断是否支持该类的操作
+     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof UsernamePasswordToken; //仅支持UsernamePasswordToken类型的Token
     }
 
+    /**
+     * 校验以及返回用户数据
+     */
     @Override
     public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 
